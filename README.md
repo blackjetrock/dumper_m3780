@@ -22,6 +22,9 @@ few bytes which are, I think, unused values.
 I then dumped the ROM from a device out of an HP82143 printer. The Boris 
 and HP dumps are in this repository.
 
+The PCB is powered by the Pico USB, whih also has a menu system to drive the
+code and get dumps.
+
 At the moment the code always dumps 4K
 
 ERRATA
