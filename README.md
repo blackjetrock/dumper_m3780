@@ -45,7 +45,7 @@ adjustment potentiometers.
 
 Code
 ----
-There's a menu system on the USB. To dump a ROM use 'u' then 'S' to dump the ROM. It takes a while as each byte
+There's a menu system on the USB. Press 'h' to see the command list. To dump a ROM use 'u' then 'S' to dump the ROM. It takes a while as each byte
 is read, when it's done the full dumpo is displayed. There's some problem that means that you need to select 'u'
 before using 'S'. As this is a one or two use dumper, I'm not bothered by these wrinkles.
 
