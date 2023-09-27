@@ -24,8 +24,8 @@ and HP dumps are in this repository.
 
 At the moment the code always dumps 4K
 
-**ERRATA**
-==========
+ERRATA
+======
 
 V1.0 PCB
 --------
