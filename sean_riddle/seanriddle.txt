@@ -1,0 +1,17 @@
+I have dumped the ROM from several 3870s using the test pin. It's a little complicated; a few data sheets go into some detail. When you put around 7V on the test pin, the ROM is disabled and you can input opcodes on port 5. When you put 3.5V on the test pin, the ROM is enabled and the databus is output on port 4. In both cases, /STROBE becomes an output, similar to the WRITE clock on a 3850. I force in DCI $0000 to reset the data counter, then LM over and over to load the next memory contents.
+
+One of the data sheets I've read said that there's a fuse on the test pin that can be blown by connecting it to -7V. If so, the bits can still be extracted visually after decapping the chip. Here's a pic of a 3851's ROM array showing how the bits are arranged: http://www.seanriddle.com/psu.html I've decapped a 3870, but haven't posted pictures of it.
+
+There are a couple of 3870-based chess computers that I dumped which are emulated in MESS.
+
+http://www.seanriddle.com/f8.html
+
+http://pdf.datasheetcatalog.com/datashe ... 295_DS.pdf
+
+
+Here's the schematic for my 3870 ROM dump hardware, and here's the PBP source code.
+I used a PIC 18F4620 microcontroller clocked at 8MHz with the 4xPLL enabled. It sends signals to the 3870 to read the ROM, and then dumps the ROM contents to a PC via serial.
+
+The hardware clocks the 3870 externally and uses the test pin to disable the ROM and force instructions to be executed. First it forces a DCI $0000 to set the data counter to $0000. Then in a loop it forces an LM to load memory at that address into a buffer, the ROM is enabled so the memory can be read, the byte is read off the data bus, and the ROM is disabled. This is repeated 3K times, then the buffer is dumped out the serial port.
+
+If you have any games that use the 3870 that you want dumped, let me know. It seems like they were used in several chess games. I've also noticed that a few Heathkit products used them. 3870s are in a 40-pin package, probably with a date code of mid-70s to mid-80s (for instance 7841). It might be labelled Mostek MK3870, or it might just have an in-house label. There could be markings on the bottom of the chip as well as the top. Many F8s (3850s, 3851s, 3870s) have an "SL" code (like SL90025). The Channel F, VideoBrain and chess game chips do. SL might stand for Software Load or Software Library.
