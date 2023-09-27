@@ -5,7 +5,9 @@ Dumper for the M3780 microcontroller family
 Uses Sean Riddle's dumper circuit, but with a RP Pico instead of the
 PIC. I ported Sean's code over to the Pico but couldn't get reliable
 reads, so I rewrote it to use a generic system of injecting instructions
-and used a more elaborate scheme to get the data out of the device.
+and used a more elaborate scheme to get the data out of the device. This 
+is very muh a haked together tool specifically built to dump a ROM. It's not
+a finished product.
 
 The TEST pin handling is the same as Sean's code, but I have code that
 can inject a (preset, in arrays) sequence of code into the device. This
