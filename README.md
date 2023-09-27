@@ -1,5 +1,6 @@
 # dumper_m3780
 Dumper for the M3780 microcontroller family
+===========================================
 
 Uses Sean Riddle's dumper circuit, but with a RP Pico instead of the
 PIC. I ported Sean's code over to the Pico but couldn't get reliable
@@ -18,3 +19,8 @@ values are, I think, correct. I checked operation with the Boris chess
 computer ROM and I got a dump that matched Sean's ecxept for the last
 few bytes which are, I think, unused values.
 
+Links
+=====
+
+Sean Riddle's site:
+https://seanriddle.com/
