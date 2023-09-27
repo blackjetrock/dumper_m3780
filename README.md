@@ -25,9 +25,6 @@ and HP dumps are in this repository.
 Links
 =====
 
-Sean Riddle's site:
-
-https://seanriddle.com/
-
-
+Sean Riddle's site:                     https://seanriddle.com/
+Forum thread:                           https://www.hpmuseum.org/forum/thread-20043.html
 
