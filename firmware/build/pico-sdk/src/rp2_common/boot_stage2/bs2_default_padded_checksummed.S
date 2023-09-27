@@ -1,4 +1,4 @@
-// Padded and checksummed version of: /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
+// Padded and checksummed version of: /tree/projects/github/dumper_m3780/firmware/build/pico-sdk/src/rp2_common/boot_stage2/bs2_default.bin
 
 .cpu cortex-m0plus
 .thumb

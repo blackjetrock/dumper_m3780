@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /tree/projects/github/hp41c/dumper_m3780/firmware
+CMAKE_SOURCE_DIR = /tree/projects/github/dumper_m3780/firmware
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /tree/projects/github/hp41c/dumper_m3780/firmware/build
+CMAKE_BINARY_DIR = /tree/projects/github/dumper_m3780/firmware/build
 
 # Utility rule file for pico_scanvideo_dpi_timing_pio_h.
 
@@ -69,8 +69,8 @@ include pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_
 pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h: pico_extras/src/rp2_common/pico_scanvideo_dpi/timing.pio.h
 
 pico_extras/src/rp2_common/pico_scanvideo_dpi/timing.pio.h: /tree/downloaded_tools/pico/pico-extras/src/rp2_common/pico_scanvideo_dpi/timing.pio
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/tree/projects/github/hp41c/dumper_m3780/firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating timing.pio.h"
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi && ../../../../pioasm/pioasm -o c-sdk /tree/downloaded_tools/pico/pico-extras/src/rp2_common/pico_scanvideo_dpi/timing.pio /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi/timing.pio.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/tree/projects/github/dumper_m3780/firmware/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating timing.pio.h"
+	cd /tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi && ../../../../pioasm/pioasm -o c-sdk /tree/downloaded_tools/pico/pico-extras/src/rp2_common/pico_scanvideo_dpi/timing.pio /tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi/timing.pio.h
 
 pico_scanvideo_dpi_timing_pio_h: pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h
 pico_scanvideo_dpi_timing_pio_h: pico_extras/src/rp2_common/pico_scanvideo_dpi/timing.pio.h
@@ -82,10 +82,10 @@ pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timi
 .PHONY : pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/build
 
 pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/clean:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi && $(CMAKE_COMMAND) -P CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/cmake_clean.cmake
+	cd /tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi && $(CMAKE_COMMAND) -P CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/cmake_clean.cmake
 .PHONY : pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/clean
 
 pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/depend:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /tree/projects/github/hp41c/dumper_m3780/firmware /tree/downloaded_tools/pico/pico-extras/src/rp2_common/pico_scanvideo_dpi /tree/projects/github/hp41c/dumper_m3780/firmware/build /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/DependInfo.cmake --color=$(COLOR)
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /tree/projects/github/dumper_m3780/firmware /tree/downloaded_tools/pico/pico-extras/src/rp2_common/pico_scanvideo_dpi /tree/projects/github/dumper_m3780/firmware/build /tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi /tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : pico_extras/src/rp2_common/pico_scanvideo_dpi/CMakeFiles/pico_scanvideo_dpi_timing_pio_h.dir/depend
 

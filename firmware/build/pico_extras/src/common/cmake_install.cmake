@@ -39,11 +39,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/common/pico_audio/cmake_install.cmake")
-  include("/tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/common/pico_scanvideo/cmake_install.cmake")
-  include("/tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/common/pico_sd_card/cmake_install.cmake")
-  include("/tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/common/pico_util_buffer/cmake_install.cmake")
-  include("/tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/common/platypus/cmake_install.cmake")
+  include("/tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/common/pico_audio/cmake_install.cmake")
+  include("/tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/common/pico_scanvideo/cmake_install.cmake")
+  include("/tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/common/pico_sd_card/cmake_install.cmake")
+  include("/tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/common/pico_util_buffer/cmake_install.cmake")
+  include("/tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/common/platypus/cmake_install.cmake")
 
 endif()
 

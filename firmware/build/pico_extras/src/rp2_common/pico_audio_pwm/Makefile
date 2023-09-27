@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /tree/projects/github/hp41c/dumper_m3780/firmware
+CMAKE_SOURCE_DIR = /tree/projects/github/dumper_m3780/firmware
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /tree/projects/github/hp41c/dumper_m3780/firmware/build
+CMAKE_BINARY_DIR = /tree/projects/github/dumper_m3780/firmware/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -E cmake_progress_start /tree/projects/github/hp41c/dumper_m3780/firmware/build/CMakeFiles /tree/projects/github/hp41c/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_audio_pwm//CMakeFiles/progress.marks
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /tree/projects/github/hp41c/dumper_m3780/firmware/build/CMakeFiles 0
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -E cmake_progress_start /tree/projects/github/dumper_m3780/firmware/build/CMakeFiles /tree/projects/github/dumper_m3780/firmware/build/pico_extras/src/rp2_common/pico_audio_pwm//CMakeFiles/progress.marks
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /tree/projects/github/dumper_m3780/firmware/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/clean
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/preinstall
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/preinstall
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/rule:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/rule
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/rule
 .PHONY : pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ pico_audio_pwm_audio_pwm_pio_h: pico_extras/src/rp2_common/pico_audio_pwm/CMakeF
 
 # fast build rule for target.
 pico_audio_pwm_audio_pwm_pio_h/fast:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/build.make pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/build
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(MAKE) $(MAKESILENT) -f pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/build.make pico_extras/src/rp2_common/pico_audio_pwm/CMakeFiles/pico_audio_pwm_audio_pwm_pio_h.dir/build
 .PHONY : pico_audio_pwm_audio_pwm_pio_h/fast
 
 # Help Target
@@ -150,6 +150,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /tree/projects/github/hp41c/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /tree/projects/github/dumper_m3780/firmware/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,5 +1,5 @@
 
-/tree/projects/github/hp41c/dumper_m3780/firmware/build/dumper_3780.elf:     file format elf32-littlearm
+/tree/projects/github/dumper_m3780/firmware/build/dumper_3780.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -45,14 +45,14 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  20 .debug_ranges 0000e0e8  00000000  00000000  00083808  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line   000245f9  00000000  00000000  000918f0  2**0
+ 21 .debug_line   000245f3  00000000  00000000  000918f0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_str    000079d5  00000000  00000000  000b5ee9  2**0
+ 22 .debug_str    000079c9  00000000  00000000  000b5ee3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 23 .debug_frame  00002c78  00000000  00000000  000bd8c0  2**2
+ 23 .debug_frame  00002c78  00000000  00000000  000bd8ac  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
-/tree/projects/github/hp41c/dumper_m3780/firmware/build/dumper_3780.elf:     file format elf32-littlearm
+/tree/projects/github/dumper_m3780/firmware/build/dumper_3780.elf:     file format elf32-littlearm
 
 
 Disassembly of section .boot2:
@@ -18375,7 +18375,7 @@ Disassembly of section .data:
 200097b8:	656c6552 00657361 746f6f62 32775f32     Release.boot2_w2
 200097c8:	38307135 00000030 00312e30 2e342e31     5q080...0.1.1.4.
 200097d8:	00000030 6f636970 00000000 706d7564     0...pico....dump
-200097e8:	335f7265 00303837 20677541 32203331     er_3780.Aug 13 2
+200097e8:	335f7265 00303837 20706553 32203732     er_3780.Sep 27 2
 200097f8:	00333230                                023.
 
 200097fc <__bi_44>:
