@@ -35,6 +35,14 @@ between the Pico and the 4066 control lines. I added a couple of FETs
 onto my PCB manually. If you don't do this then the PCB will
 not work.
 
+Here's the V1.0 PCB I used:
+
+![IMAG4222](https://github.com/blackjetrock/dumper_m3780/assets/31587992/57701a29-a1b2-4dc2-8942-d155bad40f65)
+
+You can see a dc-dc converter module on the right, and the level shifters I wired in going from the 4066 
+to the Pico on the left. The 40 pin IC is the M3780. the two LM317T circuits are on the right with their 
+adjustment potentiometers.
+
 Links
 =====
 
