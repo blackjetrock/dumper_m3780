@@ -24,6 +24,17 @@ and HP dumps are in this repository.
 
 At the moment the code always dumps 4K
 
+**ERRATA**
+==========
+
+V1.0 PCB
+--------
+
+This version of the PCB does not work unless you add level shifters 
+between the Pico and the 4066 control lines. I added a couple of FETs
+onto my PCB manually. If you don't do this then the PCB will
+not work.
+
 Links
 =====
 
