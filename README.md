@@ -43,6 +43,13 @@ You can see a dc-dc converter module on the right, and the level shifters I wire
 to the Pico on the left. The 40 pin IC is the M3780. the two LM317T circuits are on the right with their 
 adjustment potentiometers.
 
+Code
+----
+There's a menu system on the USB. To dump a ROM use 'u' then 'S' to dump the ROM. It takes a while as each byte
+is read, when it's done the full dumpo is displayed. There's some problem that means that you need to select 'u'
+before using 'S'. As this is a one or two use dumper, I'm not bothered by these wrinkles.
+
+
 Links
 =====
 
