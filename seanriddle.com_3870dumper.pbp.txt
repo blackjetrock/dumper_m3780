@@ -1,0 +1,445 @@
+;Fairchild F3870 dumper V 2
+; dumps ROM to serial port
+; 7/17/2011 Sean Riddle seanriddle@airosurf.com
+
+; works with:
+;  Chess Traveler 3870 labeled SCISYS-W COPYRIGHT 3870-0 F 8122 SINGAPORE / 3870 SL90387
+;  VideoBrain Expander 1 3870 labeled 7838 MOSTEK 3870 MK14242N DALLAS UM06-0005
+;  Hero 1 remote 3870 labeled MOSTEK@8421 MK3870/10 MK98112N MALAYSIA 444-250 @1984 HEATH CO
+;  Hero 2K remote 3870 labeled MOSTEK@TC8635 MK3870/40 MK96147N-5 MALAYSIA 444-371 @1985 HEATH CO
+;  Boris Diplomat labeled M SC80265P 007-7024-00 7847 - reset different - first inst fetch later
+
+;reads up to 3K at a time, and you can set xstart to start reading at an offset other than 0
+
+;3870 is 2K, 3870/10 is 1K, 3870/20 is 2K, 3870/30 is 3K, 3870/40 is 4K
+;3870 has 11-bit address register; 3870/xx has 12-bit
+;3870/x2 has 64 bytes of executable RAM at $FC0-$FFF; 3870/x0 does not
+;some 3870s have all short instructions - would need to update clocks sent
+
+;To do:
+; input dump offset/length via serial command
+
+;18F4620 with AN1310 bootloader
+
+INCLUDE "modedefs.bas"
+#config
+    CONFIG OSC     = INTIO67	;Internal oscillator block
+    CONFIG FCMEN    = OFF	    ;Fail-Safe Clock Monitor disabled
+    CONFIG IESO     = OFF	    ;Oscillator Switchover mode disabled
+
+    CONFIG  PWRT = OFF            ; PWRT disabled
+    CONFIG BOREN    = OFF	    ;Brown-out Reset disabled in hardware and software
+    CONFIG  BORV = 3              ; Minimum setting
+
+    CONFIG  WDT = OFF              ; WDT disabled
+    CONFIG WDTPS    = 32768	    ;1:32768
+
+    CONFIG  CCP2MX = PORTC        ; CCP2 input/output is multiplexed with RC1
+    CONFIG PBADEN   = OFF	    ;PORTB<5:0> pins are configured as digital I/O on Reset
+    CONFIG MCLRE    = ON    	;MCLR pin enabled, RE3 input pin disabled
+
+    CONFIG STVREN   = ON	    ;Stack full/underflow will cause Reset
+    CONFIG LVP      = OFF	    ;Single-Supply ICSP disabled
+    CONFIG XINST    = OFF	    ;Instruction set extension and Indexed Addressing mode disabled (Legacy mode)
+    CONFIG DEBUG    = OFF	    ;Disabled
+
+    CONFIG CP0      = OFF	    ;Block 0 (000800-003FFFh) not code-protected
+    CONFIG CP1      = OFF	    ;Block 1 (004000-007FFFh) not code-protected
+    CONFIG CP2      = OFF	    ;Block 2 (008000-00BFFFh) not code-protected
+    CONFIG CP3      = OFF	    ;Block 3 (00C000-00FFFFh) not code-protected
+
+    CONFIG CPB      = OFF	    ;Boot block (000000-0007FFh) not code-protected
+    CONFIG CPD      = OFF	    ;Data EEPROM not code-protected
+
+    CONFIG WRT0     = OFF	    ;Block 0 (000800-003FFFh) not write-protected
+    CONFIG WRT1     = OFF	    ;Block 1 (004000-007FFFh) not write-protected
+    CONFIG WRT2     = OFF	    ;Block 2 (008000-00BFFFh) not write-protected
+    CONFIG WRT3     = OFF	    ;Block 3 (00C000-00FFFFh) not write-protected
+
+    CONFIG WRTC     = OFF	    ;Configuration registers (300000-3000FFh) not write-protected
+    CONFIG WRTB     = OFF	    ;Boot Block (000000-0007FFh) not write-protected
+    CONFIG WRTD     = OFF	    ;Data EEPROM not write-protected
+
+    CONFIG EBTR0    = OFF	    ;Block 0 (000800-003FFFh) not protected from table reads executed in other blocks
+    CONFIG EBTR1    = OFF	    ;Block 1 (004000-007FFFh) not protected from table reads executed in other blocks
+    CONFIG EBTR2    = OFF	    ;Block 2 (008000-00BFFFh) not protected from table reads executed in other blocks
+    CONFIG EBTR3    = OFF	    ;Block 3 (00C000-00FFFFh) not protected from table reads executed in other blocks
+
+    CONFIG EBTRB    = OFF	    ;Boot Block (000000-0007FFh) not protected from table reads executed in other blocks    
+#endconfig
+
+;old-style config
+;@        __CONFIG    _CONFIG1H, _IESO_OFF_1H & _OSC_INTIO67_1H & _FCMEN_OFF_1H
+;@        __CONFIG    _CONFIG2H, _WDT_OFF_2H & _WDTPS_256_2H
+;@        __CONFIG    _CONFIG2L, _BOREN_OFF_2L
+;@        __CONFIG    _CONFIG3H, _PBADEN_OFF_3H & _MCLRE_ON_3H & _PBADEN_OFF_3H
+;@        __CONFIG    _CONFIG4L, _LVP_OFF_4L & _XINST_OFF_4L
+
+DEFINE  OSC         32			;8x4 MHz oscillator
+DEFINE  NO_CLRWDT   1			;watchdog is off
+define  LOADER_USED 1
+
+define HSER_RCSTA 90h           ;HSERxx defines
+define HSER_TXSTA 24h 
+define HSER_BAUD 115200
+define HSER_CLROERR 1
+
+xtal2       VAR PORTE.0         ;clock signal - output to 3870 (2 clocks on this = 1 PHI clock)
+testttl     var portE.1         ;set test pin to 3.5v - enable ROM
+testhi      var portc.1         ;set test pin to 7v - disable ROM
+reset       var porte.2         ;reset (active low)
+strobe      VAR	PORTc.0         ;strobe signal - input from 3870 (WRITE inverted)
+rddb        var portb           ;read the data bus from 3870 port 4
+wrdb        var portd           ;write the data bus from 3870 port 5 (inverted)
+flag1       var portc.2         ;toggle a bit for use to observe
+flag2       var portc.3         ;toggle another bit for us to observe
+
+serrx       var portc.7         ;don't need to declare these, but it's a reminder
+sertx       var portc.6
+
+xstart      con 00              ;read starting at xstart*64: 0=$0000, 16=$0400=1K, 32=$0800=2K, 48=$0C00=3K, 64=$1000=4K
+buffersize  con 3072            ;read this many bytes
+
+buffer      var byte[buffersize]
+x           var byte
+y           var byte
+z           var word
+doit        var bit
+halfoff     var bit
+
+;PIC initialization
+OSCCON = %01110000              ;8MHz using Primary Int Osc
+OSCTUNE.6 = 1                   ;1=PLL Enabled for internal osc 4x=32MHz
+BAUDCON.3=0                     ;AN1310 bootloader sets this
+
+ADCON1 = 15                     ;disable ADC's
+CMCON = 7                       ;disable Comparators
+WDTCON=0                        ;turn on WDT
+intcon2.7=0                     ;weak pull-ups on portb
+
+trisa=$00                       ;port A not used
+porta=0
+TRISB=$FF                       ;port B is all input - 3870 databus
+trisc=%11000001                 ;port C has serial TX and RX and 3870 strobe and testhi
+portc=0
+trisd=$00                       ;port d is all out - 3870 databus (inv)
+wrdb=$a3                        ;inverse of this is ORed with databus
+trise=$0                        ;port E 0, 1, 2 outputs (xtal2, testttl, reset)
+porte=0
+
+;start of code
+low reset                   ;reset the 3870
+high testhi                 ;disable ROM
+
+pause 500
+hserout [13,10,"3870 dumper v2.11",13,10,13,10]
+
+;init buffer to help see if not all was read
+for Z=0 to buffersize-1
+    buffer[Z]=$11
+next
+
+;init some variables here so it doesn't take time later
+halfoff=0
+doit=1
+y=0
+z=0
+
+;test to see if 3870 inserted - data bus set to $A3 above, inverse is $5C
+if rddb<>$5C then
+    hserout [13,10,"no 3870 detected",13,10,13,10]
+endif
+wrdb=$ff
+
+for x=0 to 255              ;send clocks during reset - fixed reading VBEXP
+    xtal2=0
+    @ nop
+    xtal2=1
+    @ nop
+    xtal2=0
+    @ nop
+    xtal2=1
+next
+    
+high reset                  ;release reset
+
+#if 1
+;wait for strobe=0 after reset - first inst fetch follows
+;if we see it after 1st half-clock, we need to align - 2 external
+;clocks equals 1 internal clock, and we are off by 1 external clock
+
+;had to remove status outputs because some chips wouldn't dump correctly with them
+;hserout [13,10,"waiting for strobe low",13,10,13,10]
+while doit=1
+    xtal2=0
+    if strobe=0 then
+        doit=0
+        halfoff=0
+    endif
+
+    xtal2=1
+    if strobe=0 then
+        doit=0
+        halfoff=0
+    endif
+
+    xtal2=0
+    if strobe=0 then
+        doit=0
+        halfoff=1
+    endif
+
+    xtal2=1
+    if strobe=0 then
+        doit=0
+        halfoff=1
+    endif
+wend
+;hserout [13,10,"got strobe low",13,10,13,10]
+#endif
+
+;align our 2 external clocks to the 3870's 1 internal clock
+if halfoff then
+    xtal2=0
+    @ nop
+    xtal2=1
+    @ nop
+endif
+   
+;first inst fetch - give it a DCI to set data counter DC0
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+xtal2=0
+@ nop
+xtal2=1
+wrdb=$d5                                ;force opcode $2A=DCI
+
+;hserout [13,10,"wait for strobe low 2",13,10,13,10]
+
+;clock until another strobe seen - fixed Boris Moto
+doit=1
+while doit=1
+    xtal2=0
+    @ nop
+    xtal2=1
+    @ nop
+    xtal2=0
+    @ nop
+    xtal2=1
+
+#if 0
+    if strobe=0 then
+        doit=0
+    endif
+#else
+    doit=0
+#endif
+    
+    xtal2=0
+    @ nop
+    xtal2=1
+    @ nop
+    xtal2=0
+    @ nop
+    xtal2=1
+wend
+wrdb=$ff                                ;force $00 for DCI address of $0000
+;hserout [13,10,"got strobe low 2",13,10,13,10]
+
+;clock through the instruction cycle - 20 clocks=DCI LSLS (6+4+6+4)
+for x=1 to 20
+    xtal2=0
+    @ nop
+    xtal2=1
+    @ nop
+    xtal2=0
+    @ nop
+    xtal2=1
+next
+
+;next inst fetch - give it a LM to read from memory
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+        
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+xtal2=0
+@ nop
+xtal2=1
+wrdb=$e9                                ;force opcode $16=LM
+
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+        
+xtal2=0
+@ nop
+xtal2=1
+@ nop
+xtal2=0
+x=0
+xtal2=1
+
+;enable ROM for LM to read
+low testhi
+high testttl
+
+while x<(48+xstart) ;read 3K bytes starting at offset x*64
+    while y<64
+        xtal2=0
+        wrdb=$ff                        ;don't mask the data bus
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1        
+        y=y+1
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop        
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop        
+        
+        xtal2=0
+        flag1=1                         ;so we can see when the read occurs
+        xtal2=1
+        IF X>=xstart THEN
+            buffer[z]=rddb
+        ENDIF
+        xtal2=0
+        flag1=0
+        xtal2=1
+        @ nop        
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+;disable ROM so we can force opcode during instruction fetch
+        low testttl            
+        high testhi
+        xtal2=0
+        @ nop
+        xtal2=1
+        IF X>=xstart THEN
+            z=z+1
+        ENDIF
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+        flag1=1
+        xtal2=0
+        wrdb=$e9                        ;force opcode $16=LM
+        xtal2=1
+        flag1=0
+           
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        
+        xtal2=0
+        @ nop
+        xtal2=1
+        @ nop
+        xtal2=0
+        @ nop
+        xtal2=1
+        low testhi                      ;enable ROM for LM to read
+        high testttl
+    wend
+    y=0
+    x=x+1
+WEND
+
+;idle the 3870
+low testhi
+high testttl
+low reset
+
+;dump the buffer
+hserout ["bytes=",DEC z,13,10]
+hserout ["start=",DEC xstart,13,10,13,10]
+
+x=0
+y=0
+for z=0 to buffersize-1
+    x=x+1
+    hserout [hex2 buffer[z]," "]
+    if x=32 then
+        hserout [13,10]
+        x=0
+        y=y+1
+    endif
+    if y=32 then
+        hserout [13,10]
+        y=0
+    endif
+next
+hserout ["done",13,10]
+   
+twiddlethumbs:
+    GoTo twiddlethumbs
+
+end
+
+
