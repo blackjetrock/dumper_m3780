@@ -20,10 +20,14 @@ computer ROM and I got a dump that matched Sean's ecxept for the last
 few bytes which are, I think, unused values.
 
 I then dumped the ROM from a device out of an HP82143 printer. The Boris 
-and HP dumps ar ein this repository.
+and HP dumps are in this repository.
 
 Links
 =====
 
 Sean Riddle's site:
+
 https://seanriddle.com/
+
+
+
