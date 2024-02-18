@@ -5,10 +5,10 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date ""
-Rev ""
+Date "2024-02-18"
+Rev "2.0"
 Comp ""
-Comment1 ""
+Comment1 "Level shifters added"
 Comment2 ""
 Comment3 ""
 Comment4 ""
@@ -355,12 +355,8 @@ Text GLabel 9200 4875 2    50   Input ~ 0
 +V_7V0
 Text GLabel 10025 3275 2    50   Input ~ 0
 TEST_CTRL_1
-Text GLabel 9725 4525 2    50   Input ~ 0
+Text GLabel 8475 5725 2    50   Input ~ 0
 TEST_CTRL_2
-Wire Wire Line
-	9725 4525 8900 4525
-Wire Wire Line
-	8900 4525 8900 4575
 Text GLabel 6050 2750 2    50   Input ~ 0
 TEST_CTRL_1
 Text GLabel 6050 2850 2    50   Input ~ 0
@@ -877,7 +873,7 @@ L Device:R_Small R?
 U 1 1 64D8858D
 P 9450 2650
 F 0 "R?" H 9509 2696 50  0000 L CNN
-F 1 "R_Small" H 9509 2605 50  0000 L CNN
+F 1 "4k7" H 9509 2605 50  0000 L CNN
 F 2 "" H 9450 2650 50  0001 C CNN
 F 3 "~" H 9450 2650 50  0001 C CNN
 	1    9450 2650
@@ -924,4 +920,58 @@ Wire Wire Line
 	9450 3475 9450 3600
 Wire Wire Line
 	9750 3275 10025 3275
+$Comp
+L Device:R_Small R?
+U 1 1 65D24B8F
+P 7800 5100
+F 0 "R?" H 7859 5146 50  0000 L CNN
+F 1 "4k7" H 7859 5055 50  0000 L CNN
+F 2 "" H 7800 5100 50  0001 C CNN
+F 3 "~" H 7800 5100 50  0001 C CNN
+	1    7800 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L New_Library:Si2302CDS-n-channel TR?
+U 1 1 65D24B95
+P 7900 5625
+F 0 "TR?" H 8177 5671 50  0000 L CNN
+F 1 "Si2302CDS-n-channel" H 8177 5580 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 7930 5775 20  0001 C CNN
+F 3 "" H 7900 5625 50  0001 C CNN
+	1    7900 5625
+	-1   0    0    -1  
+$EndComp
+Text GLabel 7650 4825 0    50   Input ~ 0
++VL
+Wire Wire Line
+	7650 4825 7800 4825
+Wire Wire Line
+	7800 4825 7800 5000
+$Comp
+L power:GND #PWR?
+U 1 1 65D24BA3
+P 7800 6050
+F 0 "#PWR?" H 7800 5800 50  0001 C CNN
+F 1 "GND" H 7805 5877 50  0000 C CNN
+F 2 "" H 7800 6050 50  0001 C CNN
+F 3 "" H 7800 6050 50  0001 C CNN
+	1    7800 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7800 5925 7800 6050
+Wire Wire Line
+	7800 5200 7800 5300
+Wire Wire Line
+	8475 5725 8100 5725
+Wire Wire Line
+	7800 5300 9675 5300
+Wire Wire Line
+	9675 5300 9675 4575
+Wire Wire Line
+	9675 4575 8900 4575
+Connection ~ 7800 5300
+Wire Wire Line
+	7800 5300 7800 5325
 $EndSCHEMATC

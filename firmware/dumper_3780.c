@@ -33,8 +33,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define DUMP_CODE      0
-#define RAM_TEST_CODE  1
+#define DUMP_CODE      1
+#define RAM_TEST_CODE  0
 
 #if 0
 // Gives about 2MHz clock

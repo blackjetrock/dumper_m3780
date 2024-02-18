@@ -353,14 +353,10 @@ Text GLabel 9200 4150 2    50   Input ~ 0
 +V_3V5
 Text GLabel 9200 4875 2    50   Input ~ 0
 +V_7V0
-Text GLabel 9700 3700 2    50   Input ~ 0
+Text GLabel 10025 3275 2    50   Input ~ 0
 TEST_CTRL_1
 Text GLabel 9725 4525 2    50   Input ~ 0
 TEST_CTRL_2
-Wire Wire Line
-	8900 3850 8900 3700
-Wire Wire Line
-	8900 3700 9700 3700
 Wire Wire Line
 	9725 4525 8900 4525
 Wire Wire Line
@@ -876,4 +872,56 @@ Wire Wire Line
 Connection ~ 5350 4575
 Wire Wire Line
 	5350 4575 5350 4650
+$Comp
+L Device:R_Small R?
+U 1 1 64D8858D
+P 9450 2650
+F 0 "R?" H 9509 2696 50  0000 L CNN
+F 1 "R_Small" H 9509 2605 50  0000 L CNN
+F 2 "" H 9450 2650 50  0001 C CNN
+F 3 "~" H 9450 2650 50  0001 C CNN
+	1    9450 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L New_Library:Si2302CDS-n-channel TR?
+U 1 1 64D89440
+P 9550 3175
+F 0 "TR?" H 9827 3221 50  0000 L CNN
+F 1 "Si2302CDS-n-channel" H 9827 3130 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 9580 3325 20  0001 C CNN
+F 3 "" H 9550 3175 50  0001 C CNN
+	1    9550 3175
+	-1   0    0    -1  
+$EndComp
+Text GLabel 9300 2375 0    50   Input ~ 0
++VL
+Wire Wire Line
+	9300 2375 9450 2375
+Wire Wire Line
+	9450 2375 9450 2550
+Wire Wire Line
+	9450 2750 9450 2850
+Wire Wire Line
+	9450 2850 8900 2850
+Connection ~ 9450 2850
+Wire Wire Line
+	9450 2850 9450 2875
+Wire Wire Line
+	8900 2850 8900 3850
+$Comp
+L power:GND #PWR?
+U 1 1 64D9E311
+P 9450 3600
+F 0 "#PWR?" H 9450 3350 50  0001 C CNN
+F 1 "GND" H 9455 3427 50  0000 C CNN
+F 2 "" H 9450 3600 50  0001 C CNN
+F 3 "" H 9450 3600 50  0001 C CNN
+	1    9450 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9450 3475 9450 3600
+Wire Wire Line
+	9750 3275 10025 3275
 $EndSCHEMATC
